@@ -22,7 +22,7 @@ cmake_policy(SET CMP0167 NEW)
 add_library(nnwcli STATIC)
 
 # example executable
-add_executable(nnwcli_example)
+add_executable(nnwcli_example EXCLUDE_FROM_ALL)
 
 target_include_directories(nnwcli PUBLIC include)
 # target_include_directories(nnwcli PUBLIC ${Boost_INCLUDE_DIR})
