@@ -1,4 +1,4 @@
-target_sources(nnwcli PUBLIC
+target_sources(nnwcli PRIVATE
     parser/abstract_parser.cpp
     parser/argline_parser.cpp
     parser/placeholder_parser.cpp
@@ -9,6 +9,6 @@ target_sources(nnwcli PUBLIC
     command_executor.cpp
     context.cpp
 )
-target_sources(nnwcli_example PUBLIC
+target_sources(nnwcli_example PRIVATE
     main.cpp
 )
