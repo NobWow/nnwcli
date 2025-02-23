@@ -49,11 +49,12 @@ namespace nnwcli
     public:
         std::mutex m_mutex;
 
-        explicit CommandExecutor() = delete;
+        CommandExecutor();
         explicit CommandExecutor(CommandExecutor&) = delete;
         explicit CommandExecutor(CommandExecutor&&) = delete;
 
         CommandExecutor(const std::function<std::shared_ptr<CommandExecutorContext>()>& content_factory);
+        CommandExecutor(const std::function<std::shared_ptr<CommandExecutorContext>()>&& content_factory);
 
         const std::function<std::shared_ptr<CommandExecutorContext>()>& get_factory();
         const std::shared_ptr<CommandExecutorContext>& get_latest_context();

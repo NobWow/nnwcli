@@ -17,8 +17,13 @@
 using namespace nnwcli;
 
 
+CommandExecutor::CommandExecutor() :
+    m_context_factory(nullptr), m_latest_context(nullptr) {}
 CommandExecutor::CommandExecutor(
         const std::function<std::shared_ptr<CommandExecutorContext>()>& context_factory) :
+    m_context_factory(context_factory), m_latest_context(nullptr) {}
+CommandExecutor::CommandExecutor(
+        const std::function<std::shared_ptr<CommandExecutorContext>()>&& context_factory) :
     m_context_factory(context_factory), m_latest_context(nullptr) {}
 
 const std::function<std::shared_ptr<CommandExecutorContext>()>&
