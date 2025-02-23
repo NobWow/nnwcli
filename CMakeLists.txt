@@ -24,12 +24,12 @@ add_library(nnwcli STATIC)
 # example executable
 add_executable(nnwcli_example EXCLUDE_FROM_ALL)
 
-target_include_directories(nnwcli PUBLIC include)
+target_include_directories(nnwcli PRIVATE include)
 # target_include_directories(nnwcli PUBLIC ${Boost_INCLUDE_DIR})
-target_include_directories(nnwcli_example PUBLIC include)
+target_include_directories(nnwcli_example PRIVATE include)
 # target_include_directories(nnwcli_example PUBLIC ${Boost_INCLUDE_DIR})
 
-target_link_libraries(nnwcli_example PUBLIC nnwcli)
+target_link_libraries(nnwcli_example PRIVATE nnwcli)
 
 # sources for the targets
 add_subdirectory(src)
