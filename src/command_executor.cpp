@@ -10,9 +10,13 @@
 
 #include "command_executor.hpp"
 #include "parser/argline_parser.hpp"
+#include <cassert>
+#include <iterator>
 #include <memory>
 #include <mutex>
+#include <stdexcept>
 #include <utility>
+#include <iostream>
 
 using namespace nnwcli;
 
@@ -158,17 +162,15 @@ bool CommandExecutor::dispatch_line(
             std::vector<ArgumentDefinition>::const_iterator,
             std::vector<ArgumentDefinition>::const_iterator
             > it;
-        if(parser->get_argument_pos() > cmd->second->get_args_count() - 1)
+        if(parser->get_argument_pos() + 1 > cmd->second->get_args_count())
         {
-            // report optional argument instead
             it = cmd->second->get_optarg_iter();
-            it.first += parser->get_argument_pos() - cmd->second->get_args_count() - 1;
+            std::advance(it.first, parser->get_argument_pos() - cmd->second->get_args_count());
         }
         else
         {
-            // report mandatory argument
             it = cmd->second->get_arg_iter();
-            it.first += parser->get_argument_pos();
+            std::advance(it.first, parser->get_argument_pos());
         }
         ss << "Invalid escape code sequence specified for argument \"" << it.first->m_name << "\":" << std::endl;
         ss << argline.substr(parser->get_pos()) << std::endl;
@@ -185,17 +187,17 @@ bool CommandExecutor::dispatch_line(
             std::vector<ArgumentDefinition>::const_iterator,
             std::vector<ArgumentDefinition>::const_iterator
             > it;
-        if(parser->get_argument_pos() > cmd->second->get_args_count() - 1)
+        if(parser->get_argument_pos() + 1 > cmd->second->get_args_count())
         {
             // report optional argument instead
             it = cmd->second->get_optarg_iter();
-            it.first += parser->get_argument_pos() - cmd->second->get_args_count() - 1;
+            std::advance(it.first, parser->get_argument_pos() - cmd->second->get_args_count());
         }
         else
         {
             // report mandatory argument
             it = cmd->second->get_arg_iter();
-            it.first += parser->get_argument_pos();
+            std::advance(it.first, parser->get_argument_pos());
         }
         ss << "Value outside of the boundaries provided for argument \"" << it.first->m_name << "\"." << std::endl;
         *ctx << ss;
@@ -211,15 +213,21 @@ bool CommandExecutor::dispatch_line(
             std::vector<ArgumentDefinition>::const_iterator,
             std::vector<ArgumentDefinition>::const_iterator
             > it;
-        if(parser->get_argument_pos() > cmd->second->get_args_count() - 1)
+        if(parser->get_argument_pos() + 1 > cmd->second->get_args_count())
         {
+            std::cout << "debug: arg pos " << parser->get_argument_pos() 
+                << ", args count " << cmd->second->get_args_count() << std::endl << std::flush;
             it = cmd->second->get_optarg_iter();
-            it.first += parser->get_argument_pos() - cmd->second->get_args_count() - 1;
+            std::advance(it.first, parser->get_argument_pos() - cmd->second->get_args_count());
         }
         else
         {
             it = cmd->second->get_arg_iter();
-            it.first += parser->get_argument_pos();
+            std::advance(it.first, parser->get_argument_pos());
+        }
+        if(!it.first.base())
+        {
+            throw std::runtime_error("invalid iterator");
         }
         ss << "Invalid value specified for argument \"" << it.first->m_name << "\"." << std::endl;
 
