@@ -92,6 +92,7 @@ public:
             context->flush();
             return false;
         }
+        ss << "Description: " << cmd->get_description() << std::endl;
         auto alias_it = executor->get_alias_iter();
         ss << "Aliases: ";
         write_aliases(ss, alias_it.first, alias_it.second, cmd.get());
