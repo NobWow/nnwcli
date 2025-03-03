@@ -16,7 +16,6 @@
 #include <mutex>
 #include <stdexcept>
 #include <utility>
-#include <iostream>
 
 using namespace nnwcli;
 
@@ -215,8 +214,6 @@ bool CommandExecutor::dispatch_line(
             > it;
         if(parser->get_argument_pos() + 1 > cmd->second->get_args_count())
         {
-            std::cout << "debug: arg pos " << parser->get_argument_pos() 
-                << ", args count " << cmd->second->get_args_count() << std::endl << std::flush;
             it = cmd->second->get_optarg_iter();
             std::advance(it.first, parser->get_argument_pos() - cmd->second->get_args_count());
         }
