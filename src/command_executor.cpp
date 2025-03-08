@@ -94,7 +94,8 @@ bool CommandExecutor::unregister_command(
     if(delete_aliases)
     {
         for(auto it = m_aliases.begin(); it != m_aliases.end(); it++)
-            m_aliases.erase(it);
+            if(it->second.get() == cmd.get())
+                m_aliases.erase(it);
     }
     return true;
 }
