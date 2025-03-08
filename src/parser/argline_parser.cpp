@@ -294,12 +294,14 @@ bool ArglineParser::parse_bool(bool& out, const bool required)
     if(arg == "yes" || arg == "on" || arg == "true" || arg == "y" || arg == "t")
     {
         out = true;
+        m_pos = end;
         m_argument_pos++;
         return true;
     }
     else if(arg == "no" || arg == "off" || arg == "false" || arg == "n" || arg == "f")
     {
         out = false;
+        m_pos = end;
         m_argument_pos++;
         return true;
     }
