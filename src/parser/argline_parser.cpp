@@ -151,7 +151,7 @@ std::size_t ArglineParser::_interpret_escape_into(std::string& out, std::size_t 
 
             // Note that this can have values greater than 127,
             // this will allow to create unicode-invalid strings.
-            const unsigned long value = std::stoul(raw_value);
+            const unsigned long value = std::stoul(raw_value, nullptr, 16);
 
             out.push_back(value);
 
