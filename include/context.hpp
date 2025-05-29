@@ -52,7 +52,7 @@ namespace nnwcli
         ~CommandExecutorContext();
 
         CommandExecutor* get_executor();
-        AbstractParser*  get_parser();
+        const std::shared_ptr<AbstractParser>& get_parser() const;
         void set_executor(CommandExecutor* new_executor);
         void set_parser(std::shared_ptr<AbstractParser>& parser);
 

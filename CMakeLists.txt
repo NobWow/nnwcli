@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.11)
 # CLI toolkit inspired by https://github.com/NobWow/admin-console-python, but written in C++
 # Implements an (not yet) advanced, almost independent command system.
 
-project(NNWCLI VERSION 0.1)
+project(NNWCLI VERSION 0.2)
 
 set(CMAKE_CXX_STANDARD 17)
 

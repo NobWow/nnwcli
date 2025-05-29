@@ -52,9 +52,9 @@ void CommandExecutorContext::set_executor(CommandExecutor* const new_executor)
 {
     m_executor = new_executor;
 }
-AbstractParser* CommandExecutorContext::get_parser()
+const std::shared_ptr<AbstractParser>& CommandExecutorContext::get_parser() const
 {
-    return m_parser.get();
+    return m_parser;
 }
 void CommandExecutorContext::set_parser(std::shared_ptr<AbstractParser>& new_parser)
 {
