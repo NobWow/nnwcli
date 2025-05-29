@@ -90,6 +90,12 @@ namespace nnwcli
         // This will attempt to access the custom parser registry, otherwise it will throw unknown_custom_type
         //bool parse_custom(void* out, const std::string& custom_type_name, bool required = true);
 
+
+        //
+        // Only for an argline parser.
+        //
+        const std::string& get_argline() const;
+
         //
         // Shorthand operator parsers, for C++ convenience. Interpreted as required parses.
         //

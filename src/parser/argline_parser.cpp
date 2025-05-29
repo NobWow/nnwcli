@@ -464,3 +464,8 @@ bool ArglineParser::parse_unsigned_tinyint(unsigned char& out, const bool requir
 {
     return parse_unsigned<unsigned char>(out, required);
 }
+
+const std::string& ArglineParser::get_argline() const
+{
+    return m_argline;
+}
