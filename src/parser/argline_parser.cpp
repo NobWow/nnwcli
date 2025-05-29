@@ -291,14 +291,14 @@ bool ArglineParser::parse_bool(bool& out, const bool required)
     end = std::min(m_argline.find_first_of(' ', m_pos), m_argline.size());
     std::string arg = m_argline.substr(m_pos, end - m_pos);
     make_lowercase(arg);
-    if(arg == "yes" || arg == "on" || arg == "true" || arg == "y" || arg == "t")
+    if(arg == "yes" || arg == "on" || arg == "true" || arg == "y" || arg == "t" || arg == "1")
     {
         out = true;
         m_pos = end;
         m_argument_pos++;
         return true;
     }
-    else if(arg == "no" || arg == "off" || arg == "false" || arg == "n" || arg == "f")
+    else if(arg == "no" || arg == "off" || arg == "false" || arg == "n" || arg == "f" || arg == "0")
     {
         out = false;
         m_pos = end;
