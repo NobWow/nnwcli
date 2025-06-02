@@ -38,6 +38,11 @@ bool PlaceholderParser::exhausted() const
 {
     return m_pos >= m_queue_types.size();
 }
+void PlaceholderParser::_throw_if_exhausted()
+{
+    if(m_pos >= m_queue_types.size())
+        throw not_enough_arguments();
+}
 std::deque<ArgumentTypes>* PlaceholderParser::get_types_queue()
 {
     return &m_queue_types;

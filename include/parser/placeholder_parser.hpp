@@ -68,6 +68,7 @@ namespace nnwcli
         void set_full_string(const char* value);
 
         virtual bool exhausted() const override;
+        virtual void _throw_if_exhausted() override;
 
         //
         // Parsers, will advance m_pos and give the next argument, or raise one of the exceptions.
