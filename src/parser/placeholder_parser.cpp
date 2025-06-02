@@ -144,7 +144,9 @@ void PlaceholderParser::push_bool(const bool value)
 template<typename T>
 bool PlaceholderParser::pick_from_queue(T& out, ArgumentTypes expected_type, std::deque<T>& deque, const bool required)
 {
-    if(m_queue_types.empty() || deque.empty() || m_queue_types.front() != expected_type)
+    if(m_queue_types.empty()|| m_argument_pos > m_queue_types.size() - 1 ||
+            deque.empty() || m_argument_pos > deque.size() - 1 ||
+            m_queue_types[m_argument_pos] != expected_type)
     {
         if(required)
             throw not_enough_arguments();
@@ -152,10 +154,8 @@ bool PlaceholderParser::pick_from_queue(T& out, ArgumentTypes expected_type, std
             return false;
     }
 
-    out = deque.front();
+    out = deque[m_argument_pos];
 
-    m_queue_types.pop_front();
-    deque.pop_front();
     m_argument_pos++;
     return true;
 }

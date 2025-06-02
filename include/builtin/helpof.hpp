@@ -75,7 +75,7 @@ public:
     {
         std::string cmdname;
         std::stringstream ss;
-        nnwcli::AbstractParser* const parser = context->get_parser();
+        std::shared_ptr<nnwcli::AbstractParser> const parser = context->get_parser();
         nnwcli::CommandExecutor* const executor = context->get_executor();
 
         *parser >> cmdname;
