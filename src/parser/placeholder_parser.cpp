@@ -43,7 +43,7 @@ void PlaceholderParser::_throw_if_exhausted()
     if(m_pos >= m_queue_types.size())
         throw not_enough_arguments();
 }
-std::deque<ArgumentTypes>* PlaceholderParser::get_types_queue()
+std::deque<std::pair<ArgumentTypes, std::size_t>>* PlaceholderParser::get_types_queue()
 {
     return &m_queue_types;
 }
@@ -82,71 +82,96 @@ std::deque<bool>* PlaceholderParser::get_bool_queue()
 
 void PlaceholderParser::push_string(const std::string& value)
 {
-    m_queue_types.push_back(ArgumentTypes::CT_STRING);
+    m_queue_types.push_back(
+            {ArgumentTypes::CT_STRING, m_queue_string.size()});
     m_queue_string.push_back(value);
 }
 void PlaceholderParser::push_tinyint(const char value)
 {
-    m_queue_types.push_back(ArgumentTypes::CT_TINYINT);
+    m_queue_types.push_back(
+            {ArgumentTypes::CT_TINYINT, m_queue_tinyint.size()});
     m_queue_tinyint.push_back(value);
 }
 void PlaceholderParser::push_shortint(const short value)
 {
-    m_queue_types.push_back(ArgumentTypes::CT_SHORTINT);
+    m_queue_types.push_back(
+            {ArgumentTypes::CT_SHORTINT, m_queue_shortint.size()});
     m_queue_shortint.push_back(value);
 }
 void PlaceholderParser::push_integer(const int value)
 {
-    m_queue_types.push_back(ArgumentTypes::CT_INTEGER);
+    m_queue_types.push_back(
+            {ArgumentTypes::CT_INTEGER, m_queue_integer.size()});
     m_queue_integer.push_back(value);
 }
 void PlaceholderParser::push_bigint(const long value)
 {
-    m_queue_types.push_back(ArgumentTypes::CT_BIGINT);
+    m_queue_types.push_back(
+            {ArgumentTypes::CT_BIGINT, m_queue_bigint.size()});
     m_queue_bigint.push_back(value);
 }
 void PlaceholderParser::push_unsigned_tinyint(const unsigned char value)
 {
-    m_queue_types.push_back(ArgumentTypes::CT_UTINYINT);
+    m_queue_types.push_back(
+            {ArgumentTypes::CT_UTINYINT, m_queue_tinyint.size()});
     m_queue_tinyint.push_back(value);
 }
 void PlaceholderParser::push_unsigned_shortint(const unsigned short value)
 {
-    m_queue_types.push_back(ArgumentTypes::CT_USHORTINT);
+    m_queue_types.push_back(
+            {ArgumentTypes::CT_USHORTINT, m_queue_shortint.size()});
     m_queue_shortint.push_back(value);
 }
 void PlaceholderParser::push_unsigned_integer(const unsigned int value)
 {
-    m_queue_types.push_back(ArgumentTypes::CT_UINTEGER);
+    m_queue_types.push_back(
+            {ArgumentTypes::CT_UINTEGER, m_queue_integer.size()});
     m_queue_integer.push_back(value);
 }
 void PlaceholderParser::push_unsigned_bigint(const unsigned long value)
 {
-    m_queue_types.push_back(ArgumentTypes::CT_UBIGINT);
+    m_queue_types.push_back(
+            {ArgumentTypes::CT_UBIGINT, m_queue_bigint.size()});
     m_queue_bigint.push_back(value);
 }
 void PlaceholderParser::push_float(const float value)
 {
-    m_queue_types.push_back(ArgumentTypes::CT_FLOAT);
+    m_queue_types.push_back(
+            {ArgumentTypes::CT_FLOAT, m_queue_float.size()});
     m_queue_float.push_back(value);
 }
 void PlaceholderParser::push_double(const double value)
 {
-    m_queue_types.push_back(ArgumentTypes::CT_DOUBLE);
+    m_queue_types.push_back(
+            {ArgumentTypes::CT_DOUBLE, m_queue_double.size()});
     m_queue_double.push_back(value);
 }
 void PlaceholderParser::push_bool(const bool value)
 {
-    m_queue_types.push_back(ArgumentTypes::CT_BOOL);
+    m_queue_types.push_back(
+            {ArgumentTypes::CT_BOOL, m_queue_bool.size()});
     m_queue_bool.push_back(value);
+}
+void PlaceholderParser::clear()
+{
+    m_queue_types.clear();
+    m_queue_string.clear();
+    m_queue_tinyint.clear();
+    m_queue_shortint.clear();
+    m_queue_integer.clear();
+    m_queue_bigint.clear();
+    m_queue_float.clear();
+    m_queue_double.clear();
+    m_queue_bool.clear();
+    m_queue_custom.clear();
+    m_full_string.clear();
 }
 
 template<typename T>
 bool PlaceholderParser::pick_from_queue(T& out, ArgumentTypes expected_type, std::deque<T>& deque, const bool required)
 {
     if(m_queue_types.empty()|| m_argument_pos > m_queue_types.size() - 1 ||
-            deque.empty() || m_argument_pos > deque.size() - 1 ||
-            m_queue_types[m_argument_pos] != expected_type)
+            m_queue_types[m_argument_pos].first != expected_type)
     {
         if(required)
             throw not_enough_arguments();
@@ -154,7 +179,7 @@ bool PlaceholderParser::pick_from_queue(T& out, ArgumentTypes expected_type, std
             return false;
     }
 
-    out = deque[m_argument_pos];
+    out = deque[m_queue_types[m_argument_pos].second];
 
     m_argument_pos++;
     return true;

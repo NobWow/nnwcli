@@ -56,11 +56,11 @@ namespace nnwcli
         virtual void _throw_if_exhausted() = 0;
     public:
         virtual bool exhausted() const = 0;
-        std::size_t get_pos() const;
-        std::size_t get_argument_pos() const;
-        void set_pos(std::size_t pos);
-        void reset_pos();
-        void reset_argument_pos();
+        virtual std::size_t get_pos() const;
+        virtual std::size_t get_argument_pos() const;
+        virtual void set_pos(std::size_t pos);
+        virtual void reset_pos();
+        virtual void reset_argument_pos();
 
         //
         // Parsers, will advance m_pos and give the next argument, or raise one of the exceptions.

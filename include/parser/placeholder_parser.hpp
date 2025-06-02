@@ -25,7 +25,7 @@ namespace nnwcli
 {
     class DLL_PUBLIC PlaceholderParser : public AbstractParser
     {
-        std::deque<ArgumentTypes> m_queue_types;
+        std::deque<std::pair<ArgumentTypes, std::size_t>> m_queue_types;
         std::deque<std::string> m_queue_string;
         std::deque<char> m_queue_tinyint;
         std::deque<short> m_queue_shortint;
@@ -40,7 +40,7 @@ namespace nnwcli
         template<typename T>
         bool pick_from_queue(T& out, ArgumentTypes expected_type, std::deque<T>& deque, bool required = true);
     public:
-        virtual std::deque<ArgumentTypes>* get_types_queue();
+        virtual std::deque<std::pair<ArgumentTypes, std::size_t>>* get_types_queue();
         virtual std::deque<std::string>* get_string_queue();
         virtual std::deque<char>* get_tinyint_queue();
         virtual std::deque<short>* get_shortint_queue();
@@ -62,6 +62,7 @@ namespace nnwcli
         virtual void push_float(float value);
         virtual void push_double(double value);
         virtual void push_bool(bool value);
+        virtual void clear();
 
         const std::string& get_full_string() const;
         void set_full_string(const std::string& value);
