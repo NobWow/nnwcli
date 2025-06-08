@@ -11,7 +11,7 @@ set(CMAKE_CXX_STANDARD 17)
 cmake_policy(SET CMP0076 NEW)
 
 # Do not use FindBoost module
-cmake_policy(SET CMP0167 NEW)
+# cmake_policy(SET CMP0167 NEW)
 
 # dependencies
 # set(Boost_USE_STATIC_LIBS ON)
