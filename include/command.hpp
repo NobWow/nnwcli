@@ -34,6 +34,7 @@ namespace nnwcli
                                         m_optargs;
         std::string                     m_description;
     public:
+        virtual ~Command() = default;
         /**
          * Method is invoked when command is executed in the command line.
          * Returns true when the command is executed without any issues.

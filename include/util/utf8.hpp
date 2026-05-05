@@ -7,14 +7,13 @@
 #pragma once
 
 #include <cstddef>
-#include <exception>
 #include <string>
 #include "globals.hpp"
 
 
 namespace nnwcli
 {
-    class DLL_PUBLIC unicode_too_short : std::exception
+    class DLL_PUBLIC unicode_too_short : public cli_error
     {
         virtual const char* what() const noexcept;
     };

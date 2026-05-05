@@ -15,7 +15,6 @@
 
 #pragma once
 
-#include <exception>
 #include <functional>
 #include <map>
 #include <memory>
@@ -27,7 +26,7 @@
 
 namespace nnwcli
 {
-    class command_not_found : public std::exception
+    class command_not_found : public cli_error
     {
         virtual const char* what() const noexcept override
         {
@@ -50,8 +49,9 @@ namespace nnwcli
         std::mutex m_mutex;
 
         CommandExecutor();
-        explicit CommandExecutor(CommandExecutor&) = delete;
-        explicit CommandExecutor(CommandExecutor&&) = delete;
+        virtual ~CommandExecutor() = default;
+        CommandExecutor(CommandExecutor&) = delete;
+        CommandExecutor(CommandExecutor&&) = delete;
 
         CommandExecutor(const std::function<std::shared_ptr<CommandExecutorContext>()>& content_factory);
         CommandExecutor(const std::function<std::shared_ptr<CommandExecutorContext>()>&& content_factory);

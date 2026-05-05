@@ -40,6 +40,7 @@ namespace nnwcli
                             m_command;
         std::string         m_alias;
     public:
+        virtual ~CommandExecutorContext();
         CommandExecutorContext();
         CommandExecutorContext(
                 CommandExecutor* executor,
@@ -49,7 +50,6 @@ namespace nnwcli
                 std::shared_ptr<AbstractParser>& parser);
         CommandExecutorContext(
                 CommandExecutor* executor);
-        ~CommandExecutorContext();
 
         CommandExecutor* get_executor();
         const std::shared_ptr<AbstractParser>& get_parser() const;

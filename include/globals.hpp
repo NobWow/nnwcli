@@ -5,6 +5,7 @@
 
 // https://gcc.gnu.org/wiki/Visibility
 //
+#include <exception>
 #if defined _WIN32 || defined __CYGWIN__
   #ifdef BUILDING_DLL
     #ifdef __GNUC__
@@ -29,3 +30,10 @@
     #define DLL_LOCAL
   #endif
 #endif
+
+namespace nnwcli
+{
+
+class cli_error : public std::exception {};
+
+}

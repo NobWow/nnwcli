@@ -24,7 +24,7 @@ namespace nnwcli
     const char __escape = '\\';
     const char __whitespace = ' ';
 
-    class DLL_PUBLIC unexpected_escape_character : std::exception
+    class DLL_PUBLIC unexpected_escape_character : public cli_error
     {
     public:
         int m_pos;
@@ -34,7 +34,7 @@ namespace nnwcli
         }
         virtual const char* what() const noexcept override;
     };
-    class DLL_PUBLIC invalid_escape_format : std::exception
+    class DLL_PUBLIC invalid_escape_format : public cli_error
     {
     public:
         virtual const char* what() const noexcept override;
@@ -56,9 +56,10 @@ namespace nnwcli
         virtual void _throw_if_exhausted() override;
 
     public:
-        explicit ArglineParser() = delete;
-        explicit ArglineParser(ArglineParser&) = delete;
-        explicit ArglineParser(ArglineParser&&) = delete;
+        virtual ~ArglineParser() = default;
+        ArglineParser() = delete;
+        ArglineParser(ArglineParser&) = delete;
+        ArglineParser(ArglineParser&&) = delete;
 
         ArglineParser(
                 const std::string argline,

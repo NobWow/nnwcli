@@ -26,22 +26,22 @@
 
 namespace nnwcli
 {
-    class DLL_PUBLIC unclosed_quote : std::exception
+    class DLL_PUBLIC unclosed_quote : public cli_error
     {
     public:
         virtual const char* what() const noexcept override;
     };
-    class DLL_PUBLIC not_enough_arguments : std::exception
+    class DLL_PUBLIC not_enough_arguments : public cli_error
     {
     public:
         virtual const char* what() const noexcept override;
     };
-    class DLL_PUBLIC too_many_arguments : std::exception
+    class DLL_PUBLIC too_many_arguments : public cli_error
     {
     public:
         virtual const char* what() const noexcept override;
     };
-    class DLL_PUBLIC unknown_custom_type : std::exception
+    class DLL_PUBLIC unknown_custom_type : public cli_error
     {
     public:
         virtual const char* what() const noexcept override;
@@ -55,6 +55,7 @@ namespace nnwcli
         std::size_t m_pos = 0, m_argument_pos = 0;
         virtual void _throw_if_exhausted() = 0;
     public:
+        virtual ~AbstractParser() = default;
         virtual bool exhausted() const = 0;
         virtual std::size_t get_pos() const;
         virtual std::size_t get_argument_pos() const;

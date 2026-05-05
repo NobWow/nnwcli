@@ -40,6 +40,7 @@ namespace nnwcli
         template<typename T>
         bool pick_from_queue(T& out, ArgumentTypes expected_type, std::deque<T>& deque, bool required = true);
     public:
+        virtual ~PlaceholderParser() override = default;
         virtual std::deque<std::pair<ArgumentTypes, std::size_t>>* get_types_queue();
         virtual std::deque<std::string>* get_string_queue();
         virtual std::deque<char>* get_tinyint_queue();
